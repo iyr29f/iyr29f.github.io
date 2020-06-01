@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Log internet</title>
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="card col s12 m12 z-depth-3">
+				<div class="card-panel amber z-depth-2 center-align">
+					<span class="card-title">
+						<h5>"Take it easy"</h5>
+					</span>
+				</div>
+				<div class="switch center-align">
+					<label class="flow-text">Off
+						<input type="checkbox" name="group-1" value="0"><span class="lever"></span>
+					On</label>
+				</div>
+				<ul class="collapsible">
+					<li>
+						<div class="collapsible-header">
+							<span class="right-align">Think Before You Switch</span>
+						</div>
+
+						<!-- <div class="progress">
+							<div class="indeterminate"></div>
+						</div> -->
+						<div class="collapsible-body">
+							<div class="row">
+								<div class="col s6 m6">
+									<div id="info1" class="collection"></div>
+								</div>
+								<div class="col s6 m6">
+									<div id="info2" class="collection"></div>
+								</div>
+								<span class="col 12 m12">
+									<blockquote><h5>Don't worry, we don't collected your info</h5></blockquote>
+								</span>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+
+			<script type="text/javascript">
+				document.addEventListener('DOMContentLoaded', function() {
+					let coll = document.querySelector('.collapsible');
+					M.Collapsible.init(coll);
+					let inst = M.Collapsible.getInstance(coll);
+					let eles = document.querySelectorAll("input[type='checkbox']");
+					openColl = () => {
+						for (let i = 0; i < eles.length; i++) {
+							if (eles[i].checked) {
+								inst.open(eles[i].value);
+							}
+							else
+							{
+								inst.close(eles[i].value);
+							}
+						}
+					};
+					for (let i = 0; i < eles.length; i++) {
+						eles[i].addEventListener('click', openColl);
+					}
+				})
+			</script>
+
+			<script type="text/javascript">
+
+			//load after document ready
+			document.addEventListener("DOMContentLoaded", function(event) {
+				var data = {
+					'browserName':platform.name,
+					'browserVersion':platform.version,
+					'manufacture':platform.manufacturer,
+					'product':platform.product,
+					'osArch':platform.os.architecture,
+					'osFamily':platform.os.family,
+					'osVersion':platform.os.version
+				}
+
+				let template = {'<>':'ul','html':[
+				{'<>':'li','class':'collection-item','html':'Browser: '+'${browserName}'+' '+'(${browserVersion})'},
+				{'<>':'li','class':'collection-item','html':'Manufacture: '+'${manufacture}'},
+				{'<>':'li','class':'collection-item','html':'Product: '+'${product}'},
+				{'<>':'li','class':'collection-item','html':'OS: '+'${osFamily}'+' '+'${osVersion}'+' '+'${osArch}bit'}
+				]}
+
+				document.getElementById('info2').innerHTML = json2html.transform(data,template);
+			});
+		</script>
+
+
+		<script type="text/javascript">
+			//log IP
+			//document ready short tag ES15
+			document.addEventListener("DOMContentLoaded", ()=> {
+				var request = new XMLHttpRequest();
+				request.open('GET', 'https://ipapi.co/json', true);
+				request.onload = function() {
+					if (this.status >= 200 && this.status < 400) {
+						var data = JSON.parse(this.response);
+						let template = {'<>':'ul','html':[
+						{'<>':'li','class':'collection-item','html': 'IP: '+'${ip}'},
+						{'<>':'li','class':'collection-item','html': 'City: '+'${city}'},
+						{'<>':'li','class':'collection-item','html': 'Country: '+'${country_name}'},
+						{'<>':'li','class':'collection-item','html': 'Provider: '+'${org}'},
+						{'<>':'li','class':'collection-item','html': 'Autonomous Serial Number: '+'${asn}'}
+						]} 
+						document.getElementById('info1').innerHTML =json2html.transform(data,template);
+					} 
+					else {
+						console.log('We reached our target server, but it returned an error')
+					}
+				};
+				request.onerror = function(){
+					console.table('There was a connection error of some sort')
+				};
+				request.send();
+			});
+		</script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/platform/1.3.5/platform.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/json2html/1.4.0/json2html.min.js"></script>
+	</body>
+	</html>
