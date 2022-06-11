@@ -80,9 +80,10 @@
 						console.log(data);
 						let template = {'<>':'ul','html':[
 				{'<>':'li','class':'collection-item','html':'Browser: '+'${browser_family}'+' '+'(${client.version})'},
+				{'<>':'li','class':'collection-item','html':'OS: '+'${os_family}'+' '+'${os.version}'+' '+'${os.platform}bit'}
+				{'<>':'li','class':'collection-item','html':'Type: '+'${device.type}'},
 				{'<>':'li','class':'collection-item','html':'Manufacture: '+'${device.brand}'},
 				{'<>':'li','class':'collection-item','html':'Product: '+'${device.model}'},
-				{'<>':'li','class':'collection-item','html':'OS: '+'${os_family}'+' '+'${os.version}'+' '+'${os.platform}bit'}
 				]} 
 						document.getElementById('info1').innerHTML =json2html.transform(data,template);
 					} 
