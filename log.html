@@ -69,7 +69,7 @@
 				})
 			</script>
 
-			<script type="text/javascript">
+		<script type="text/javascript">
 			document.addEventListener("DOMContentLoaded", ()=> {
 				var request = new XMLHttpRequest();
 				let agent = navigator.userAgent;
@@ -85,7 +85,7 @@
 				{'<>':'li','class':'collection-item','html':'Manufacture: '+'${device.brand}'},
 				{'<>':'li','class':'collection-item','html':'Product: '+'${device.model}'},
 				]} 
-						document.getElementById('info1').innerHTML =json2html.transform(data,template);
+						document.getElementById('info2').innerHTML =json2html.transform(data,template);
 					} 
 					else {
 						console.log('We reached our target server, but it returned an error')
@@ -95,11 +95,8 @@
 					console.table('There was a connection error of some sort')
 				};
 				request.send();
-			});
-		</script>
-
-
-		<script type="text/javascript">
+			});	
+		
 			//log IP
 			//document ready short tag ES15
 			document.addEventListener("DOMContentLoaded", ()=> {
