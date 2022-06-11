@@ -100,7 +100,7 @@
 			//document ready short tag ES15
 			document.addEventListener("DOMContentLoaded", ()=> {
 				var request = new XMLHttpRequest();
-				request.open('GET', 'https://api.ipbase.com/v1/json/', true);
+				request.open('GET', 'https://ipapi.co/json', true);
 				request.onload = function() {
 					if (this.status >= 200 && this.status < 400) {
 						var data = JSON.parse(this.response);
