@@ -80,7 +80,8 @@
 						console.log(data);
 						let template = {'<>':'ul','html':[
 							{'<>':'li','class':'collection-item','html':'Browser: '+'${browser_family}'+' '+'(${client.version})'},
-							{'<>':'li','class':'collection-item','html':'OS: '+'${os_family}'+' '+'${os.version}'+' '+'${os.platform}'},
+							{'<>':'li','class':'collection-item','html':'OS: '+'${os_family}'+' '+'${os.version}'},
+							{'<>':'li','class':'collection-item','html':'Arch: '+'${os.platform}'},
 							{'<>':'li','class':'collection-item','html':'Device: '+'${device.type}'},
 							{'<>':'li','class':'collection-item','html':'Manufacture: '+'${device.brand}'},
 							{'<>':'li','class':'collection-item','html':'Product: '+'${device.model}'}
