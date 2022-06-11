@@ -70,27 +70,29 @@
 			</script>
 
 			<script type="text/javascript">
-
-			//load after document ready
-			document.addEventListener("DOMContentLoaded", function(event) {
-				var data = {
-					'browserName':platform.name,
-					'browserVersion':platform.version,
-					'manufacture':platform.manufacturer,
-					'product':platform.product,
-					'osArch':platform.os.architecture,
-					'osFamily':platform.os.family,
-					'osVersion':platform.os.version
-				}
-
-				let template = {'<>':'ul','html':[
-				{'<>':'li','class':'collection-item','html':'Browser: '+'${browserName}'+' '+'(${browserVersion})'},
-				{'<>':'li','class':'collection-item','html':'Manufacture: '+'${manufacture}'},
-				{'<>':'li','class':'collection-item','html':'Product: '+'${product}'},
-				{'<>':'li','class':'collection-item','html':'OS: '+'${osFamily}'+' '+'${osVersion}'+' '+'${osArch}bit'}
-				]}
-
-				document.getElementById('info2').innerHTML = json2html.transform(data,template);
+			document.addEventListener("DOMContentLoaded", ()=> {
+				var request = new XMLHttpRequest();
+				let agent = navigator.userAgent;
+				request.open('GET', 'https://api.apicagent.com/?ua='+agent, true);
+				request.onload = function() {
+					if (this.status >= 200 && this.status < 400) {
+						var data = JSON.parse(this.response);
+						let template = {'<>':'ul','html':[
+				{'<>':'li','class':'collection-item','html':'Browser: '+'${browser_family}'+' '+'(${client.version})'},
+				{'<>':'li','class':'collection-item','html':'Manufacture: '+'${device.brand}'},
+				{'<>':'li','class':'collection-item','html':'Product: '+'${device.model}'},
+				{'<>':'li','class':'collection-item','html':'OS: '+'${os_family}'+' '+'${os.version}'+' '+'${os.platform}bit'}
+				]} 
+						document.getElementById('info1').innerHTML =json2html.transform(data,template);
+					} 
+					else {
+						console.log('We reached our target server, but it returned an error')
+					}
+				};
+				request.onerror = function(){
+					console.table('There was a connection error of some sort')
+				};
+				request.send();
 			});
 		</script>
 
